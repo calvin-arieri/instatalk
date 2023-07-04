@@ -2,6 +2,9 @@ import { useEffect, useState, useRef, useContext } from 'react';
 
 import { useTheme } from 'next-themes';
 import Users from '../components/users';
+import Reels from '../components/posts';
+import Search from '../components/search';
+import Posts from '../components/posts';
 
 
 
@@ -52,7 +55,9 @@ const Home = () => {
       <div className="w-full minmd:w-4/5">
     
       <div>
-       <Users />
+      <Search />
+      <Users />
+      <Posts />
 
         
 
