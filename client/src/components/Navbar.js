@@ -1,3 +1,6 @@
-const PostForm(){
+function PostForm(){
+
     
 }
+
+export default PostForm
