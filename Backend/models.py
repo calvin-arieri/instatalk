@@ -4,8 +4,9 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import func
 from flask_bcrypt import Bcrypt
 
+
 db = SQLAlchemy()
-bcrypt = Bcrypt()
+bcrypt= Bcrypt()
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
