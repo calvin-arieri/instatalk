@@ -13,8 +13,8 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
     
-    posts = db.relationship('Post', backref='user')
-    comments = db.relationship('Comment', backref='user')
+    post = db.relationship('Post', backref='user')
+    comment = db.relationship('Comment', backref='user')
 
     def __repr__(self):
         return f'User: {self.username}, ID: {self.id}'
@@ -43,7 +43,7 @@ class Post(db.Model, SerializerMixin):
     dislikes = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    comments= db.relationship('Comment', backref='post')
+    comment= db.relationship('Comment', backref='post')
 
     def __repr__(self):
         return f'Image: {self.image_url}, Likes: {self.likes}, Dislikes: {self.dislikes}'
