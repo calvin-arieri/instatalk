@@ -15,7 +15,7 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
       case 1:
         return '/profile';
       case 2:
-        return '/';
+        return '/login';
       default:
         return '/';
     }
@@ -23,7 +23,7 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
 
   return (
     <ul className={`list-none flexCenter flex-row ${isMobile && 'flex-col h-full'}`}>
-      {['Home',  'signup', 'My Profile',].map((item, i) => (
+      {['Home',  'My Profile', 'Login',].map((item, i) => (
         <li
           key={i}
           onClick={() => {
@@ -68,7 +68,7 @@ const checkActive = (active, setActive, router) => {
     case '/profile':
       if (active !== 'Listed NFTs') setActive('Listed NFTs');
       break;
-    case '/my-nfts':
+    case '/login':
       if (active !== 'My NFTs') setActive('My NFTs');
       break;
     case '/create-nft':
