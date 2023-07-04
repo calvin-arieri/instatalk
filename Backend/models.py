@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.sql import func
 from app import bcrypt
 
 db = SQLAlchemy()
@@ -9,7 +10,6 @@ class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    posts = db.Column()
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
     
@@ -39,8 +39,10 @@ class Post(db.Model, SerializerMixin):
 
     id =db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String, nullable=False)
-    likes = db.column(db.Integer)
-    dislikes = db.Column(db.Integer)
+    likes = db.Column(db.Integer, default=0)
+    dislikes = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default = func.now())
+    updated_at = db.Column(db.DateTime, onupdate= func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     comment= db.relationship('Comment', backref='post')
@@ -53,6 +55,8 @@ class Comment(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     comment =db.Column(db.String(length=150))
+    created_at = db.Column(db.DateTime, default = func.now())
+    updated_at = db.Column(db.DateTime, onupdate = func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
 
