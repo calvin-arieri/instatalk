@@ -12,7 +12,7 @@ const Stories = () => {
   return (
     <div className="container mx-auto px-4">
       <h1 className="text-3xl font-bold mb-4">Stories</h1>
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-3 gap-4">
         {users.map((user) => (
           <div key={user.id} className="flex flex-col items-center">
             <div className="w-32 h-32 relative">
