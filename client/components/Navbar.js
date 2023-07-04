@@ -23,7 +23,7 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
 
   return (
     <ul className={`list-none flexCenter flex-row ${isMobile && 'flex-col h-full'}`}>
-      {['Home',  'My Profile'].map((item, i) => (
+      {['Home',  'signup', 'My Profile',].map((item, i) => (
         <li
           key={i}
           onClick={() => {

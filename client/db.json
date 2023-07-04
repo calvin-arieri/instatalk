@@ -1,0 +1,38 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "john_doe",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "password123",
+      "profilePicture": "https://images.unsplash.com/photo-1607982863027-0cb6818ee8b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cHJvZmlsZSUyMHBob3Rvc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      "posts": [20],
+      "followers": ["10.3K"],
+      "following": [2]
+    },
+    {
+      "id": 2,
+      "username": "jane_smith",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "password": "password456",
+      "profilePicture": "https://picsum.photos/300",
+      "caption": "Beautiful sunset",
+      "posts": [15],
+      "followers": ["100K"],
+      "following": [1]
+    },
+    {
+      "id": 3,
+      "username": "alex_williams",
+      "name": "Alex Williams",
+      "email": "alex.williams@example.com",
+      "password": "password789",
+      "profilePicture": "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
+      "posts": [5],
+      "followers": ["1M"],
+      "following": [1]
+    }
+  ]
+}
