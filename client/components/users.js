@@ -11,7 +11,7 @@ const Users = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-bold mb-4">Explore Page</h1>
+      <h1 className="text-3xl font-bold mb-4">Users</h1>
       <div className="grid grid-cols-3 gap-8">
         {users.map((user) => (
           <div key={user.id} className="bg-white rounded-lg p-6 shadow-md">
