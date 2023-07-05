@@ -37,6 +37,7 @@ class Index(Resource):
         return response
 
 api.add_resource(Index, '/')
+
 class Login(Resource):
     def post(self):
         data = request.get_json()
@@ -93,6 +94,12 @@ class User(Resource):
     pass
 
 class UserById(Resource):
+    pass
+
+class Post(Resource):
+    pass
+
+class PostById(Resource):
     pass
 
 
