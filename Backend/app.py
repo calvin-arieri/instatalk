@@ -95,12 +95,23 @@ class Signup(Resource):
 api.add_resource(Signup, '/signup')
 
 class User(Resource):
-    def get():
-        pass
+    def get(self):
+        users = User.query.all()
+        user_list = [user.to_dict() for user in users]
+        response = make_response(jsonify(user_list), 200)
+        return response 
+        
 api.add_resource(User, '/user')
 
 class UserById(Resource):
-    pass
+    def get(self, user_id):
+        user = User.query.get(user_id)
+        if user:
+            response = make_response(jsonify(user.to_dict()), 200)
+        else:
+            response = make_response(jsonify({'meesage': 'User not found'}), 404)
+        return response
+    
 api.add_resource(UserById, '/user/<int:user_id>')
 
 class Post(Resource):
