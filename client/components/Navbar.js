@@ -16,14 +16,16 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
         return '/profile';
       case 2:
         return '/login';
-      default:
-        return '/';
+      case 3:
+        return '/login'
+      // default:
+      //   return '/';
     }
   };
 
   return (
     <ul className={`list-none flexCenter flex-row ${isMobile && 'flex-col h-full'}`}>
-      {['Home',  'My Profile', 'Login',].map((item, i) => (
+      {['Home',  'My Profile', 'Login', 'Logout'].map((item, i) => (
         <li
           key={i}
           onClick={() => {
@@ -63,15 +65,15 @@ const ButtonGroup = ({ setActive, router }) => {
 const checkActive = (active, setActive, router) => {
   switch (router.pathname) {
     case '/':
-      if (active !== 'Top Models') setActive('Top Models');
+      if (active !== 'Home') setActive('Home');
       break;
     case '/profile':
-      if (active !== 'Listed NFTs') setActive('Listed NFTs');
+      if (active !== '') setActive('');
       break;
     case '/login':
-      if (active !== 'My NFTs') setActive('My NFTs');
+      if (active !== '') setActive('');
       break;
-    case '/create-nft':
+    case '/login':
       if (active !== '') setActive('');
       break;
     default:

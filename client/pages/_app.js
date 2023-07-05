@@ -13,9 +13,11 @@ const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to login page if not logged in and not on the login page
-    if (!isLoggedIn && router.pathname !== '/login') {
-      router.push('/login');
+    if (typeof window !== 'undefined') {
+      // Redirect to login page if not logged in and not on the login page
+      if (!isLoggedIn && router.pathname !== '/login') {
+        router.push('/login');
+      }
     }
   }, [isLoggedIn, router.pathname]);
 
