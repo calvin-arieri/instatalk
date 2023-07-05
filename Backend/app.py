@@ -101,7 +101,7 @@ class User(Resource):
         response = make_response(jsonify(user_list), 200)
         return response 
         
-api.add_resource(User, '/user')
+api.add_resource(User, '/users')
 
 class UserById(Resource):
     def get(self, user_id):
@@ -121,18 +121,46 @@ class Post(Resource):
         response = make_response(jsonify(post_list), 200)
         return response
     
-api.add_resource(Post, '/post')
+    
+    
+api.add_resource(Post, '/posts')
 
 class PostById(Resource):
     def get(self, post_id):
         post = Post.query.get(post_id)
         if post:
-            response = make_response(jsonify(post.to_dict()), 200)
+            response_data = {
+                'post': post.to_dict(),
+                'comments': [comment.to_dict() for comment in post.comment]
+            }
+            response = make_response(jsonify(response_data), 200)
         else:
             response = make_response(jsonify({'message': 'Post not found'}), 404)
         return response
     
-    def post(self, post_id):
+    def put(self, post_id):
+        post = Post.query.get(post_id)
+        if post:
+            data = request.get_json()
+            post.image_url = data.get('image_url', post.image_url)
+            post.caption = data.get('caption', post.caption)
+            db.session.commit()
+            response = make_response(jsonify({'message':'Post updated successfully'}), 200)
+        else:
+            response =make_response(jsonify({'message':'Post not found'}), 404)
+        return response
+    
+    def delete(self, post_id):
+        post = Post.query.get(post_id)
+        if post:
+            db.session.delete(post)
+            db.session.commit()
+            response = make_response(jsonify({'message': 'Post deleted successfully'}), 200)
+        else:
+            response = make_response(jsonify({'message':'Post not found'}), 404)
+        return response
+    
+    def post(self):
         data = request.get_json()
         image_url = data.get('image_url')
         caption = data.get('caption')
@@ -151,16 +179,55 @@ class PostById(Resource):
         else:
             response = make_response(jsonify({'message':'User not authenticated'}), 401)
         return response
+    
 
 api.add_resource(PostById, '/post/<int:post_id>')
 
-class Comment(Resource):
-    pass
-
-api.add_resource(Comment, '/comment')
 
 class CommentById(Resource):
-    pass
+    def put(self, comment_id):
+        comment = Comment.query.get(comment_id)
+        if comment:
+            data = request.get_json()
+            comment.comment = data.get('comment', comment.comment)
+            db.session.commit()
+            response = make_response(jsonify({'message':'Comment updated successfully'}), 200)
+        else:
+            response = make_response(jsonify({'message':'Comment not found'}), 400)
+        return response
+    def delete(self,comment_id):
+        comment= Comment.query.get(comment_id)
+        if comment:
+            db.session.delete(comment)
+            db.session.commit()
+            response = make_response(jsonify({'message':'Comment deleted successfully'}), 200)
+        else:
+            response = make_response(jsonify({'message':'Comment not found'}), 400)
+        return response
+
+    def post(self):
+        data = request.get_json()
+        comment_text = data.get('comment')
+
+        user_id = session.get('user_id')
+        post_id = data.get('post_id')
+
+        if user_id:
+            user = User.query.get(user_id)
+            if user:
+                post = Post.query.get(post_id)
+                if post:
+                    comment = Comment(comment=comment_text, user=user, post=post)
+                    db.session.add(comment)
+                    db.session.commit()
+                    response = make_response(jsonify({'message':'Comment created successfully'}), 201)
+                else:
+                    response = make_response(jsonify({'message':'Post not found'}), 404)
+            else:
+                response = make_response(jsonify({'message':'User not found'}), 404)
+        else:
+            response = make_response(jsonify({'message':'User not authenticated'}), 400)
+        return response
 
 api.add_resource(CommentById, '/comment/<int:comment_id>')
 
