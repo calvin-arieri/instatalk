@@ -1,6 +1,12 @@
 import { useEffect, useState, useRef, useContext } from 'react';
 
 import { useTheme } from 'next-themes';
+import Users from '../components/users';
+
+import Search from '../components/search';
+
+import Stories from '../components/stories';
+import Posts from '../components/Posts';
 
 
 
@@ -51,22 +57,20 @@ const Home = () => {
       <div className="w-full minmd:w-4/5">
     
       <div>
-        <h1 className="font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold ml-4 xs:ml-0">Fetch all users from DB</h1>
-        <h1>All users from db will be displayed here</h1>
-     
+      <Stories />
+
+      <Search />
+      <Users />
+      <Posts />
+      
+
 
         
 
 </div>
 </div>
-
-
-
       </div>
-    
 
-
-            
 );
 }
 
