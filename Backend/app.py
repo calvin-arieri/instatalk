@@ -213,14 +213,14 @@ class CommentById(Resource):
         post_id = data.get('post_id')
 
         if user_id:
-            user = User.get.query.get(user_id)
+            user = User.query.get(user_id)
             if user:
                 post = Post.query.get(post_id)
                 if post:
                     comment = Comment(comment=comment_text, user=user, post=post)
                     db.session.add(comment)
                     db.session.commit()
-                    response = make_response(jsonify({'message':'Comment created successfully'}), 200)
+                    response = make_response(jsonify({'message':'Comment created successfully'}), 201)
                 else:
                     response = make_response(jsonify({'message':'Post not found'}), 404)
             else:
