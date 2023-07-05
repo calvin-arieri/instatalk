@@ -62,6 +62,7 @@ const Home = () => {
       <Search />
       <Users />
       <Posts />
+      
     
       
 
@@ -76,3 +77,6 @@ const Home = () => {
 }
 
 export default Home;
+
+
+// global id variable,,,,,
