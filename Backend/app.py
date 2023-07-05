@@ -108,7 +108,7 @@ api.add_resource(Post, '/post')
 class PostById(Resource):
     pass
 
-api.add_resource(PostById, '/post/<int:post_id')
+api.add_resource(PostById, '/post/<int:post_id>')
 
 class Comment(Resource):
     pass

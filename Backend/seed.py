@@ -8,16 +8,16 @@ print("Seeding has started. ")
 
 fake = Faker()
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 with app.app_context():
     db.drop_all()
     db.create_all()
 
-    # Generate 50 users
+    # Generate 20 users (to stay within the RPM limit)
     users = []
     passwords = []
-    for _ in range(50):
+    for _ in range(20):
         username = fake.unique.user_name()
         password = fake.password()
         passwords.append(password)
@@ -26,20 +26,25 @@ with app.app_context():
         users.append(user)
         db.session.add(user)
 
+    # Print users and passwords to a text file and overwrites the existing file
+    with open('user_passwords.txt', 'w') as file:
+        for user, password in zip(users, passwords):
+            file.write(f"Username: {user.username}\tPassword: {password}\n")
+
     print (users) #this is only for development
     print (passwords)  #for us to access a user in our client side   
 
     db.session.commit()
 
-    # Generate 50 posts
+    # Generate 40 posts to stay within the RPM limit
     posts = []
-    for _ in range(100):
+    for _ in range(40):
         user = random.choice(users)
         image_url = "https://picsum.photos/400/500"
         likes = random.randint(0,1000)
         dislikes = random.randint(0,1000)
         created_at = fake.date_time_between(start_date="-3y", end_date="now")
-        post = Post(user=user.id, image_url=image_url, likes=likes, 
+        post = Post(user_id=user.id, image_url=image_url, likes=likes, 
                     dislikes = dislikes, created_at=created_at)
         posts.append(post)
         db.session.add(post)
@@ -52,7 +57,7 @@ with app.app_context():
         response = openai.Completion.create(
             engine='text-davinci-003',
             prompt=prompt,
-            max_tokens = 100,
+            max_tokens = 50, # Limiting tokens per comment
             n=1,
             stop=None,
             temperature=0.7
@@ -60,8 +65,8 @@ with app.app_context():
         comment = response.choice[0].text.strip()
         return comment
     
-    # Generate 500 comments
-    for _ in range(500):
+    # Generate 200 comments to stay within the TPM limit
+    for _ in range(200):
         user = random.choice(users)
         post = random.choice(posts)
         comment_text = generate_comment()
