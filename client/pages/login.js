@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-function Login({ setIsLoggedIn }) {
+function Login({ setIsLoggedIn, setLoggedInUser  }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
