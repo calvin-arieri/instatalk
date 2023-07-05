@@ -115,11 +115,42 @@ class UserById(Resource):
 api.add_resource(UserById, '/user/<int:user_id>')
 
 class Post(Resource):
-    pass
+    def get(self):
+        posts = Post.query.all()
+        post_list = [post.to_dict() for post in posts]
+        response = make_response(jsonify(post_list), 200)
+        return response
+    
 api.add_resource(Post, '/post')
 
 class PostById(Resource):
-    pass
+    def get(self, post_id):
+        post = Post.query.get(post_id)
+        if post:
+            response = make_response(jsonify(post.to_dict()), 200)
+        else:
+            response = make_response(jsonify({'message': 'Post not found'}), 404)
+        return response
+    
+    def post(self, post_id):
+        data = request.get_json()
+        image_url = data.get('image_url')
+        caption = data.get('caption')
+
+        user_id = session.get('user_id')
+
+        if user_id:
+            user = User.query.get(user_id)
+            if user:
+                post = Post(image_url=image_url, caption=caption, user=user)
+                db.session.add(post)
+                db.session.commit()
+                response = make_response(jsonify({'message': 'Post created successfully'}), 201)
+            else:
+                response = make_response(jsonify({'message':'User does not exist'}), 404)
+        else:
+            response = make_response(jsonify({'message':'User not authenticated'}), 401)
+        return response
 
 api.add_resource(PostById, '/post/<int:post_id>')
 
