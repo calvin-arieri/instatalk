@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_cors import CORS
 from werkzeug.security import check_password_hash
-from models import db, User, Post, Comment, _password_hash,bcrypt
+from models import db, User, Post, Comment, bcrypt
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instatalk.db'
@@ -37,6 +37,7 @@ class Index(Resource):
         return response
 
 api.add_resource(Index, '/')
+
 class Login(Resource):
     def post(self):
         data = request.get_json()
@@ -45,11 +46,12 @@ class Login(Resource):
 
         user = User.query.filter_by(username=username).first()
 
-        if user and check_password_hash(user._password_hash, password):
+        if user and check_password_hash(user.password_hash, password):
             session['user_id'] = user.id
             return jsonify(user.to_dict())
         else:
             return {'message': 'Invalid username or password'}, 401  
+        
 api.add_resource(Login, '/login')
 
 class CheckSession(Resource):
@@ -67,19 +69,22 @@ class Logout(Resource):
     def get(self):
         session['user_id'] = None
         return jsonify({'message': '204: No Content'}), 204
+    
 api.add_resource(Logout, '/logout')
 
 class Signup(Resource):
     def post(self):
         data = request.get_json()
         username = data['username']
+        password = data['password']
 
         user = User.query.filter_by(username=username).first()
 
         if user:
             return{'message': 'Username already in use'}, 401
         else:
-            user = User(username=username, password_hash=_password_hash)
+            user = User(username=username)
+            user.password_hash = password
             db.session.add(user)
             db.session.commit()
 
@@ -90,10 +95,30 @@ api.add_resource(Signup, '/signup')
 class User(Resource):
     def get():
         pass
-    pass
+api.add_resource(User, '/user')
 
 class UserById(Resource):
     pass
+api.add_resource(UserById, '/user/<int:user_id>')
+
+class Post(Resource):
+    pass
+api.add_resource(Post, '/post')
+
+class PostById(Resource):
+    pass
+
+api.add_resource(PostById, '/post/<int:post_id>')
+
+class Comment(Resource):
+    pass
+
+api.add_resource(Comment, '/comment')
+
+class CommentById(Resource):
+    pass
+
+api.add_resource(CommentById, '/comment/<int:comment_id>')
 
 
 

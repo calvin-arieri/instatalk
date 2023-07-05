@@ -13,6 +13,10 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
+    first_name = db.Column(db.String, nullable=False, default="FirstName")
+    second_name = db.Column(db.String, nullable=False, default="SecondName")
+    profile_photo = db.Column(db.String)
+    email = db.Column(db.String)
     _password_hash = db.Column(db.String, nullable=False)
     
     post = db.relationship('Post', backref='user')
@@ -43,6 +47,7 @@ class Post(db.Model, SerializerMixin):
     image_url = db.Column(db.String, nullable=False)
     likes = db.Column(db.Integer, default=0)
     dislikes = db.Column(db.Integer, default=0)
+    caption = db.Column(db.String(200))
     created_at = db.Column(db.DateTime, default = func.now())
     updated_at = db.Column(db.DateTime, onupdate= func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
