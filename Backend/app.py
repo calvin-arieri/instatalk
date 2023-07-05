@@ -5,12 +5,14 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_cors import CORS
 from werkzeug.security import check_password_hash
+from sqlalchemy_serializer import SerializerMixin
 from models import db, User, Post, Comment, bcrypt
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instatalk.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.json_encoder = SerializerMixin.json_encoder
 
 
 
