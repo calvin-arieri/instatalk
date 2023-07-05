@@ -28,6 +28,7 @@ function UpdateProfile(){
         headers: {
           "Content-Type": "application/json",
         },
+<<<<<<< HEAD
         body: JSON.stringify(values),
       })
       .then((r) => {
@@ -35,6 +36,26 @@ function UpdateProfile(){
           alert("Successfully updated");
         } else {
           alert("Please try again later. It appears there was a problem updating your profile.");
+=======
+        validationSchema:formSchema,
+        onSubmit:(values)=>{
+            console.log(values)
+            fetch("http://localhost:8000/users",{
+                method: "PATCH",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(values)
+            })
+            .then((r)=>{
+                if(r.ok){
+                    alert("You have been added successfully you can now log in.")
+                }
+                else{
+                    alert("please try again later it appears there was a problem registering you")
+                }
+            })
+>>>>>>> 3a33fd6 (added global variable)
         }
       });
     },

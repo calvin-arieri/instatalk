@@ -8,7 +8,7 @@ function SignUp(){
             second_name:yup.string().min(5).max(10).required("Your second name must be entered"),
             profile_photo:yup.string().min(29).required("Must add image url"),
             email:yup.string().required("Must input email").email("Invalid email"),
-            _password_hash:yup.string().required("Must put password").min(8).max(15),
+            password_hash:yup.string().required("Must put password").min(8).max(15),
         }
     )
     
@@ -19,7 +19,7 @@ function SignUp(){
             second_name:"",
             profile_photo:"",
             email:"",
-            _password_hash:"",            
+            password_hash:"",            
         },
         validationSchema:formSchema,
         onSubmit:(values)=>{
