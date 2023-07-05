@@ -45,6 +45,7 @@ urllib3 = "2.0.3"
 Werkzeug = "2.3.6"
 wheel = "0.40.0"
 yarl = "1.9.2"
+markovify = "0.9.4"
 
 [dev-packages]
 
