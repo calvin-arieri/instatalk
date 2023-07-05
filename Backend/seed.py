@@ -1,6 +1,5 @@
 import random
 import openai
-from datetime import datetime, timedelta
 from faker import Faker
 from app import app
 from models import db, User, Post, Comment
@@ -9,7 +8,7 @@ print("Seeding has started. ")
 
 fake = Faker()
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 with app.app_context():
     db.drop_all()
@@ -17,12 +16,18 @@ with app.app_context():
 
     # Generate 50 users
     users = []
+    passwords = []
     for _ in range(50):
         username = fake.unique.user_name()
         password = fake.password()
-        user = User(username=username, _password_hash=password)
+        passwords.append(password)
+        user = User(username=username)
+        user.password_hash = password # Hash password is set
         users.append(user)
         db.session.add(user)
+
+    print (users) #this is only for development
+    print (passwords)  #for us to access a user in our client side   
 
     db.session.commit()
 
