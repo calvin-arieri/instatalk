@@ -10,6 +10,7 @@ import Posts from '../components/Posts';
 
 
 
+
 const Home = () => {
   const { theme } = useTheme();
 
@@ -58,10 +59,10 @@ const Home = () => {
     
       <div>
       <Stories />
-
       <Search />
       <Users />
       <Posts />
+    
       
 
 

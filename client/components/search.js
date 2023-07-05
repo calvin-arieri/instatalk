@@ -2,7 +2,7 @@ import React from 'react';
 
 const Search = () => {
   return (
-    <div className="flex items-center justify-center ">
+    <div className="flex items-center justify-center mt-2 ">
       <input
         type="text"
         placeholder="Search"

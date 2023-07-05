@@ -3,13 +3,18 @@
     {
       "id": 1,
       "username": "john_doe",
+      "password": "password123",
       "name": "John Doe",
       "email": "john.doe@example.com",
-      "password": "password123",
+      
       "profilePicture": "https://images.unsplash.com/photo-1607982863027-0cb6818ee8b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cHJvZmlsZSUyMHBob3Rvc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      "caption": "Beautiful sunset",
       "posts": [20],
       "followers": ["10.3K"],
-      "following": [2]
+      "following": [2],
+      "likes": ["20K"],
+      "comments": ["50"],
+      "shares":["300k"]
     },
     {
       "id": 2,
@@ -21,7 +26,10 @@
       "caption": "Beautiful sunset",
       "posts": [15],
       "followers": ["100K"],
-      "following": [1]
+      "following": [1],
+      "likes": ["20K"],
+      "comments": ["50"],
+      "shares":["300k"]
     },
     {
       "id": 3,
@@ -30,9 +38,45 @@
       "email": "alex.williams@example.com",
       "password": "password789",
       "profilePicture": "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
+      "caption": "Beautiful sunset",
+
       "posts": [5],
       "followers": ["1M"],
-      "following": [1]
+      "following": [1],
+      "likes": ["20K"],
+      "comments": ["50"],
+      "shares":["300k"]
+    },
+    {
+      "id": 4,
+      "username": "john_doe",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "password123",
+      "profilePicture": "https://images.unsplash.com/photo-1607982863027-0cb6818ee8b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cHJvZmlsZSUyMHBob3Rvc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      "caption": "Beautiful sunset",
+
+      "posts": [20],
+      "followers": ["10.3K"],
+      "following": [2],
+      "likes": ["20K"],
+      "comments": ["50"],
+      "shares":["300k"]
+    },
+    {
+      "id": 5,
+      "username": "jane_smith",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "password": "password456",
+      "profilePicture": "https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.webp?b=1&s=170667a&w=0&k=20&c=YQ_j83pg9fB-HWOd1Qur3_kBmG_ot_hZty8pvoFkr6A=",
+      "caption": "Beautiful sunset",
+      "posts": [15],
+      "followers": ["100K"],
+      "following": [1],
+      "likes": ["20K"],
+      "comments": ["50"],
+      "shares":["300k"]
     }
   ]
 }
