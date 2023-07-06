@@ -28,6 +28,8 @@ class User(db.Model, SerializerMixin):
     number_of_comments = db.Column(db.Integer, default=0)
     number_of_shares = db.Column(db.Integer, default=0)
     
+    
+    
     post = db.relationship('Post', backref='user')
     comment = db.relationship('Comment', backref='user')
 

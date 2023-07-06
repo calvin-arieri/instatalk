@@ -42,7 +42,7 @@ const Profile = () => {
 
               </div>
               <div>                
-                <p className="text-gray-600" onClick={()=>{setComponent(<UpdateProfile current_user_details={userdata} changes_url={user_url} />)}}>Update details</p>
+                <p className="text-gray-600" onClick={()=>{setComponent(<UpdateProfile current_user_details={userdata} changes_url={`http://127.0.0.1:5555/user/${id_of_current_user}`} />)}}>Update details</p>
               </div>
             </div>
             </div>
