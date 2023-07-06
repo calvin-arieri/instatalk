@@ -1,12 +1,10 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-
 import { useTheme } from 'next-themes';
 import Users from '../components/users';
-
 import Search from '../components/search';
-
 import Stories from '../components/stories';
 import Posts from '../components/Posts';
+import SignUp from '../components/SignUp';
 
 
 
@@ -61,8 +59,7 @@ const Home = () => {
       <Stories />
       <Search />
       <Users />
-      <Posts />
-      
+      <Posts />     
     
       
 

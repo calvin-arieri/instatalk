@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function PostForm({ the_link }) {
+function PostForm({user_get_id, posting_link}) {
   const formSchema = yup.object().shape({
     image_url: yup.string().required("Must enter an Image URL"),
     comment: yup.string().required("Must enter a caption").min(15).max(100),

@@ -5,6 +5,8 @@ function Login({ setIsLoggedIn, setLoggedInUser  }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [password_message, setMessage]=useState()
+  const [username_message, set_username]=useState()
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,10 +27,10 @@ function Login({ setIsLoggedIn, setLoggedInUser  }) {
             setIsLoggedIn(true);
             router.push("/");
           } else {
-            console.log("Invalid password");
+            setMessage("Invalid password");
           }
         } else {
-          console.log("Invalid username");
+          set_username("Invalid username");
         }
       }
     } catch (error) {
@@ -60,6 +62,7 @@ function Login({ setIsLoggedIn, setLoggedInUser  }) {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+            <p>{username_message}</p>
           </div>
           <div className="mb-6">
             <label
@@ -76,6 +79,7 @@ function Login({ setIsLoggedIn, setLoggedInUser  }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <p>{password_message}</p>
           </div>
           <div className="flex items-center justify-between">
             <button

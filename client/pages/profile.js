@@ -34,12 +34,12 @@ const Profile = () => {
 
               </div>
               <div className="mr-8">
-                <p className="text-black" onClick={()=>{setComponent(<PostForm user_get_id={userdata.id}/>)}}>Add Post</p>
+                <p className="text-black" onClick={()=>{setComponent(<PostForm  user_get_id={userdata.id}/>)}}>Add Post</p>
                 <p className="font-semibold text-lg text-black">{758}</p>     
 
               </div>
               <div>                
-                <p className="text-gray-600" onClick={()=>{setComponent(<UpdateProfile />)}}>Update details</p>
+                <p className="text-gray-600" onClick={()=>{setComponent(<UpdateProfile current_user_detaills={userdata} />)}}>Update details</p>
                 <p className="font-semibold text-lg text-black">{7585}</p>
 
               </div>
