@@ -1,7 +1,8 @@
 # server/app.py
 from flask import Flask, jsonify, request, make_response, session
-
+from werkzeug.exceptions import HTTPException, NotFound
 from flask_migrate import Migrate
+from flask_restful import Api, Resource
 from flask_cors import CORS
 from werkzeug.security import check_password_hash
 from models import db, User, Post, Comment, bcrypt
@@ -11,10 +12,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instatalk.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 # app.json_encoder = SerializerMixin.json_encoder
+app.secret_key= b'm{\xf9\xec\xa0\xa7Gv\x98\x07\xa9\xfb\xdb\xe2\x8d\x86'
 
 
 CORS(app)
 migrate = Migrate(app, db)
+api = Api(app)
 db.init_app(app)
 # instantiate Bcrypt with app instance
 bcrypt.init_app(app)
@@ -34,6 +37,14 @@ def index():
 
     return response
 
+class ClearSession(Resource):
+    def delete(self):
+        session['page_views'] = None
+        session['user_id'] = None
+
+        return {}, 204
+
+api.add_resource(ClearSession, '/clear')
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -81,6 +92,39 @@ def signup():
         db.session.commit()
 
         return {'message': 'User created successfully'}, 201
+    
+@app.errorhandler(NotFound)
+def handle_notfound(e):
+    response = make_response("Not found:System under maintenance check back later", 404)
+    return response
+
+@app.errorhandler(HTTPException)
+def handle_server_error(e):
+    response = make_response(
+        "Server Error: System server under maintenance check back later",
+        500
+
+    )
+    return response
+
+class ShowSession(Resource):
+    def get(self, key):
+        session["home"] = session.get("home")
+
+        response = make_response(jsonify({
+            "session":{
+                'session_key': key,
+                'session_value': session[key],
+                'session_accessible': session.accessed,
+            },
+            'cookies':[{cookie: request.cookies[cookie]}
+                       for cookie in request.cookies],
+        }), 200
+        )
+        response.set_cookie('mouse', 'Cookie')
+        return response 
+
+api.add_resource(ShowSession, '/sessions/<string:key>')
 
 @app.route('/users', methods=['GET'])
 def get_users():

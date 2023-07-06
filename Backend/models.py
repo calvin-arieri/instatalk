@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import func
+from sqlalchemy.orm import validates
 from flask_bcrypt import Bcrypt
 
 
@@ -22,6 +23,8 @@ class User(db.Model, SerializerMixin):
     post = db.relationship('Post', backref='user')
     comment = db.relationship('Comment', backref='user')
 
+    serialize_rules = ("-post.user","-comment.user")
+
     def __repr__(self):
         return f'User: {self.username}, ID: {self.id}'
 
@@ -40,6 +43,22 @@ class User(db.Model, SerializerMixin):
             self._password_hash, password.encode('utf-8')
         )
     
+    def to_dict(self):
+        return{
+            'id' : self.id,
+            'username': self.username,
+            'first_name': self.first_name,
+            'second_name': self.second_name,
+            'profile_photo': self.profile_photo,
+            'email': self.email
+        }
+    @validates('email')
+    def validates_email(self, key, users):
+        if '@' not in users:
+            ValueError("enter a valid email")
+        else:
+            return users
+    
 class Post(db.Model, SerializerMixin):
     __tablename__ = "posts"
 
@@ -54,6 +73,8 @@ class Post(db.Model, SerializerMixin):
 
     comment= db.relationship('Comment', backref='post')
 
+    serialize_rules = ("-user.post", "-comment.post")
+
     def __repr__(self):
         return f'Image: {self.image_url}, Likes: {self.likes}, Dislikes: {self.dislikes}'
     
@@ -66,6 +87,8 @@ class Comment(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+
+    serialize_rules = ("-user.comment", "-post.comment")
 
     def __repr__(self):
         return f'Comment: {self.comment}, ID: {self.id}' 
