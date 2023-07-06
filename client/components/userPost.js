@@ -7,11 +7,7 @@ function UserPost({user_idNo}){
     const [refresh_page, setRefreshPage]=useState(false)
     const specific_link="http://127.0.0.1:5000/post"
     useEffect(()=>{
-<<<<<<< HEAD
-      fetch('http://127.0.0.1:5555/users')
-=======
       fetch(`http://127.0.0.1:5000/posts`)
->>>>>>> 76b7ba3 (done with my side)
       .then((r)=>r.json())
       .then((data)=>{
         if(data.length > 0){
