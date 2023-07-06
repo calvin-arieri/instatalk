@@ -153,7 +153,7 @@ def get_posts():
     
    
 
-@app.route('/post', methods=['POST'])
+@app.route('/posts', methods=['POST'])
 def create_post():
     data = request.get_json()
     image_url = data.get('image_url')
