@@ -135,7 +135,7 @@ with app.app_context():
     for _ in range(40):
         
         user = random.choice(users)
-        image_url = f"https://picsum.photos/id/{image_id}400/500"
+        image_url = f"https://picsum.photos/id/{image_id}/400/500"
         likes = random.randint(0,1000)
         dislikes = random.randint(0,1000)
         caption_text = generate_random_text(caption_corpus)
