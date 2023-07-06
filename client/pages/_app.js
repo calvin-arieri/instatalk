@@ -33,7 +33,7 @@ const MyApp = ({ Component, pageProps }) => {
             {/* <Footer /> */}
           </>
         ) : (
-          <Login setIsLoggedIn={setIsLoggedIn} />
+           <Login setIsLoggedIn={setIsLoggedIn} />
         )}
       </div>
       <Script src="https://kit.fontawesome.com/d45b25ceeb.js" crossorigin="anonymous" />

@@ -132,21 +132,56 @@ def get_users():
     response = make_response(jsonify(user_list), 200)
     return response
 
-@app.route('/user/<int:user_id>', methods=['GET'])
+@app.route('/user/<int:user_id>', methods=['GET', 'PATCH'])
 def get_user(user_id):
-    user = User.query.get(user_id)
-    if user:
-        response = make_response(jsonify(user.to_dict()), 200)
-    else:
-        response = make_response(jsonify({'message': 'User not found'}), 404)
-    return response
+    if request.method=='GET':
+        user = User.query.get(user_id)
+        if user:
+            response = make_response(jsonify(user.to_dict()), 200)
+        else:
+            response = make_response(jsonify({'message': 'User not found'}), 404)
+        return response
 
 @app.route('/posts', methods=['GET'])
 def get_posts():
-    posts = Post.query.all()
-    post_list = [post.to_dict() for post in posts]
-    response = make_response(jsonify(post_list), 200)
-    return response
+    if request.method=="GET":
+        posts = Post.query.all()
+        post_list = [post.to_dict() for post in posts]
+        response = make_response(jsonify(post_list), 200)
+        return response
+    
+   
+
+@app.route('/posts', methods=['POST'])
+def create_post():
+    data = request.get_json()
+    image_url = data.get('image_url')
+    caption = data.get('caption')
+    
+    if not image_url:
+        response = make_response(jsonify({'message':'Image URL is required'}), 400)
+        return 
+    
+    user_id = session.get('user_id')
+
+    if not user_id:
+        response = make_response(jsonify({'message': 'User not logged in'}), 401)
+        return response 
+    
+    user = User.query.get(user_id)
+
+    if not user:
+        response = make_response(jsonify({'message': 'User not found'}), 404)
+
+        return response
+    
+    post = Post(image_url=image_url,caption=caption, user=user)
+    db.session.add(post)
+    db.session.commit()
+
+    response = make_response(jsonify({'message': 'Post created successfully', 'post': post.to_dict()}), 201)
+
+    return response 
 
 @app.route('/post/<int:post_id>', methods=['GET', 'PUT', 'DELETE'])
 def post_operations(post_id):

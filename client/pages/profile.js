@@ -3,22 +3,22 @@ import { useState, useEffect } from 'react'
 import UserPost from '../components/userPost'
 import PostForm from '../components/PostForm'
 import UpdateProfile from '../components/UpdateProfile'
-import { data } from 'autoprefixer'
 
-const Profile = () => {
+const Profile = ({id_of_current_user}) => {
   const [userdata, setUserData]=useState({})
-  const [display, setComponent]=useState(<UserPost specific_link={`http://127.0.0.1:5000/posts`} />)
   useEffect(()=>{
-    fetch('http://127.0.0.1:5000/user/1')
+    const user_url=`http://127.0.0.1:5000/user/${id_of_current_user}`
+    fetch(user_url)
     .then((r)=>r.json())
     .then((data)=>{setUserData(data)})
   },[])
   console.log(userdata)
+  const [display, setComponent]=useState(<UserPost user_idNo={id_of_current_user} />)
   return (
-    <div>
+    <div class='mx-auto w-3/4'>
       <div>
-      <div  className="shadow-md">
-            <div className="flex items-center mb-4">
+      <div  class="shadow-md mx-auto">
+            <div className="flex  mb-4">
               <img
                 src={userdata.profile_photo}
                 alt={userdata.username}
@@ -29,21 +29,19 @@ const Profile = () => {
                 <p className="text-gray-600">@{userdata.username}</p>
               </div>
             </div>
-            <div className="items-center">
+
+            <div className="items-center flex mx-auto w-3/4 ">
               <div className="mr-8">
-                <p className="text-white hover:text-gray" onClick={()=>{setComponent(<UserPost specific_link={`http://127.0.0.1:5000/posts`} />)}}>Posts</p>
-                <p className="font-semibold text-lg text-black">{3}</p>
+                <p className="text-white hover:text-gray" onClick={()=>{setComponent(<UserPost user_idNo={userdata.id} />)}}>Posts</p>
 
               </div>
               <div className="mr-8">
                 <p className="text-black" onClick={()=>{setComponent(<PostForm  user_get_id={userdata.id}/>)}}>Add Post</p>
-                <p className="font-semibold text-lg text-black">{758}</p>     
+                <p className="font-semibold text-lg text-black">{userdata.number_of_followers}</p>     
 
               </div>
               <div>                
-                <p className="text-gray-600" onClick={()=>{setComponent(<UpdateProfile current_user_detaills={userdata} />)}}>Update details</p>
-                <p className="font-semibold text-lg text-black">{7585}</p>
-
+                <p className="text-gray-600" onClick={()=>{setComponent(<UpdateProfile current_user_details={userdata} changes_url={user_url} />)}}>Update details</p>
               </div>
             </div>
             </div>
