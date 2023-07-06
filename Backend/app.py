@@ -133,21 +133,25 @@ def get_users():
     response = make_response(jsonify(user_list), 200)
     return response
 
-@app.route('/user/<int:user_id>', methods=['GET'])
+@app.route('/user/<int:user_id>', methods=['GET', 'PATCH'])
 def get_user(user_id):
-    user = User.query.get(user_id)
-    if user:
-        response = make_response(jsonify(user.to_dict()), 200)
-    else:
-        response = make_response(jsonify({'message': 'User not found'}), 404)
-    return response
+    if request.method=='GET':
+        user = User.query.get(user_id)
+        if user:
+            response = make_response(jsonify(user.to_dict()), 200)
+        else:
+            response = make_response(jsonify({'message': 'User not found'}), 404)
+        return response
 
 @app.route('/posts', methods=['GET'])
 def get_posts():
-    posts = Post.query.all()
-    post_list = [post.to_dict() for post in posts]
-    response = make_response(jsonify(post_list), 200)
-    return response
+    if request.method=="GET":
+        posts = Post.query.all()
+        post_list = [post.to_dict() for post in posts]
+        response = make_response(jsonify(post_list), 200)
+        return response
+    
+   
 
 @app.route('/post', methods=['POST'])
 def create_post():

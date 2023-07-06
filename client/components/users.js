@@ -50,7 +50,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/users')
+    fetch('http://127.0.0.1:5555/users')
       .then((response) => response.json())
       .then((data) => setUsers(data));
   }, []);
@@ -68,7 +68,7 @@ const Users = () => {
                 <div key={user.id} className="bg-white rounded-lg p-6 shadow-md">
                   <div className="flex items-center mb-4">
                     <img
-                      src={user.profilePicture}
+                      src={user.profile_photo}
                       alt={user.name}
                       className="rounded-full h-16 w-18 mr-4"
                     />
@@ -80,19 +80,19 @@ const Users = () => {
                   <div className="flex items-center justify-between">
                     <div className="mr-8">
                       <p className="text-black">Posts</p>
-                      <p className="font-semibold text-lg text-black">{user.posts}</p>
+                      <p className="font-semibold text-lg text-black">{user.number_of_posts}</p>
 
                     </div>
                     <div className="mr-8">
                       <p className="text-black">Followers</p>
-                      <p className="font-semibold text-lg text-black">{user.followers}</p>
+                      <p className="font-semibold text-lg text-black">{user.number_of_followers}</p>
 
 
                     </div>
                     <div>
 
                       <p className="text-gray-600">Following</p>
-                      <p className="font-semibold text-lg text-black">{user.following}</p>
+                      <p className="font-semibold text-lg text-black">{user.number_of_following}</p>
 
                     </div>
                   </div>

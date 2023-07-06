@@ -4,10 +4,9 @@ from faker import Faker
 from app import app
 from models import db, User, Post, Comment
 
-print("Seeding has started. ")
+print("Seeding has started.")
 
 fake = Faker()
-
 
 with app.app_context():
     db.drop_all()
@@ -22,28 +21,38 @@ with app.app_context():
         first_name = fake.first_name()
         second_name = fake.last_name()
         email = fake.email()
+        number_of_posts = random.randint(0, 100)
+        number_of_followers = random.randint(0, 1000)
+        number_of_following = random.randint(0, 1000)
+        number_of_likes = random.randint(0, 10000)
+        number_of_comments = random.randint(0, 1000)
+        number_of_shares = random.randint(0, 1000)
         passwords.append(password)
-        user = User(username=username,
-                    first_name=first_name,
-                    second_name=second_name,
-                    email=email
+        user = User(
+            username=username,
+            first_name=first_name,
+            second_name=second_name,
+            email=email,
+            number_of_posts=number_of_posts,
+            number_of_followers=number_of_followers,
+            number_of_following=number_of_following,
+            number_of_likes=number_of_likes,
+            number_of_comments=number_of_comments,
+            number_of_shares=number_of_shares
         )
-        user.password_hash = password # Hash password is set
+        user.password_hash = password  # Hash password is set
         user.profile_photo = "https://picsum.photos/400"
         users.append(user)
         db.session.add(user)
 
-    # Print users and passwords to a text file and overwrites the existing file
+    # Print users and passwords to a text file and overwrite the existing file
     with open('user_passwords.txt', 'w') as file:
         for user, password in zip(users, passwords):
             file.write(f"Username: {user.username}\tPassword: {password}\n")
 
-    print (users) #this is only for development
-    print (passwords)  #for us to access a user in our client side   
-
     db.session.commit()
 
-     #This function generates random text using Markov Chains
+    # This function generates random text using Markov Chains
     def generate_random_text(text_corpus, max_length=100):
         text_model = markovify.Text(text_corpus)
         return text_model.make_sentence(max_length=max_length)

@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from 'yup';
 
-function UpdateProfile(){
+function UpdateProfile({current_user_details, changes_url}){
   const formSchema=yup.object().shape({
     username:yup.string().max(20),
     _password_hash:yup.string().min(8),
@@ -10,13 +10,13 @@ function UpdateProfile(){
   const formik=useFormik(
     {
       initialValues:{
-        username:"",
-        _password_hash:"",
+        username:current_user_details.username,
+        _password_hash:current_user_details._password_hash,
       },
       validationSchema:formSchema,
       onSubmit:(values)=>{
         console.log(values)
-        fetch({blank_for},{
+        fetch(changes_url,{
           method:'PATCH',
           headers:{
             "Content-Type":"application/json",
