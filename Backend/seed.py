@@ -32,6 +32,7 @@ with app.app_context():
         passwords.append(password)
         user = User(
             username=username,
+            password=password,
             first_name=first_name,
             second_name=second_name,
             email=email,
@@ -60,8 +61,10 @@ with app.app_context():
         text_model = markovify.Text(text_corpus)
         return text_model.make_sentence(max_length=max_length)
     
-    #The below will now be used to train the Markov to generate good random text
+    # The below will now be used to train the Markov to generate good random text
     caption_corpus = """
+        The rustling of palm trees in a tropical breeze creates a serene and relaxing atmosphere.
+        The aroma of a home-cooked meal fills the kitchen, enticing appetites.
         This is a sample caption corpus. Add more sample sentences here to improve the randomness of generated captions.
         You can have multiple sentences in the corpus.
         Each sentence should be on a separate line.
@@ -121,10 +124,11 @@ with app.app_context():
         The crackling of ice in a glass signals the start of a refreshing drink.
         A chorus of crickets fills the night, a symphony of nature's orchestra.
         The scent of a crackling fireplace brings warmth and comfort to a winter's evening.
-        The sound of children's laughter echoes through the playground, a joyful melody.
+        The sound of children's laughter echoes through the playground, a joyful mel
     """
-        
 
+ 
+    
     # Generate 40 posts to stay within the RPM limit
     posts = []
     image_id = 69
@@ -144,8 +148,6 @@ with app.app_context():
 
     db.session.commit()
 
-   
-    
     # Generate 200 comments to stay within the TPM limit
     for _ in range(200):
         user = random.choice(users)
@@ -158,3 +160,17 @@ with app.app_context():
     db.session.commit()
 
 print("Seeding completed successfully.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

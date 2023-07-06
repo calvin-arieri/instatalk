@@ -46,19 +46,18 @@ class ClearSession(Resource):
 
 api.add_resource(ClearSession, '/clear')
 
-@app.route('/login', methods=['POST'])
+@app.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
-    username = data['username']
-    password = data['password']
+    username = data["username"]
+    password = data["password"]
 
     user = User.query.filter_by(username=username).first()
 
-    if user and check_password_hash(user.password_hash, password):
-        session['user_id'] = user.id
-        return jsonify(user.to_dict())
+    if user and password:
+        return jsonify(user={"id": user.id, "username": user.username})
     else:
-        return {'message': 'Invalid username or password'}, 401  
+        return jsonify(message="Invalid username or password"), 401  
         
 
 @app.route('/check_session')
@@ -87,7 +86,7 @@ def signup():
         return {'message': 'Username already in use'}, 401
     else:
         user = User(username=username)
-        user.password_hash = password
+        user.password = password
         db.session.add(user)
         db.session.commit()
 

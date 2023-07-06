@@ -4,10 +4,11 @@ import UserPost from '../components/userPost'
 import PostForm from '../components/PostForm'
 import UpdateProfile from '../components/UpdateProfile'
 
-const Profile = ({id_of_current_user}) => {
+const Profile = () => {
+  const id_of_current_user = 2
   const [userdata, setUserData]=useState({})
   useEffect(()=>{
-    const user_url=`http://127.0.0.1:5000/user/${id_of_current_user}`
+    const user_url=`http://127.0.0.1:5555/user/${id_of_current_user}`
     fetch(user_url)
     .then((r)=>r.json())
     .then((data)=>{setUserData(data)})
@@ -33,18 +34,15 @@ const Profile = ({id_of_current_user}) => {
             <div className="items-center flex mx-auto w-3/4 ">
               <div className="mr-8">
                 <p className="text-white hover:text-gray" onClick={()=>{setComponent(<UserPost user_idNo={userdata.id} />)}}>Posts</p>
-                <p className="font-semibold text-lg text-black">{3}</p>
 
               </div>
               <div className="mr-8">
                 <p className="text-black" onClick={()=>{setComponent(<PostForm  user_get_id={userdata.id}/>)}}>Add Post</p>
-                <p className="font-semibold text-lg text-black">{758}</p>     
+                <p className="font-semibold text-lg text-black">{userdata.number_of_followers}</p>     
 
               </div>
               <div>                
-                <p className="text-gray-600" onClick={()=>{setComponent(<UpdateProfile current_user_details={userdata} changes_url={user_url} />)}}>Update details</p>
-                <p className="font-semibold text-lg text-black">{7585}</p>
-
+                <p className="text-gray-600" onClick={()=>{setComponent(<UpdateProfile current_user_details={userdata} changes_url={`http://127.0.0.1:5555/user/${id_of_current_user}`} />)}}>Update details</p>
               </div>
             </div>
             </div>

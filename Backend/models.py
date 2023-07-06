@@ -18,7 +18,7 @@ class User(db.Model, SerializerMixin):
     second_name = db.Column(db.String, nullable=False, default="SecondName")
     profile_photo = db.Column(db.String)
     email = db.Column(db.String)
-    _password_hash = db.Column(db.String, nullable=False)
+    password = db.Column(db.String(256), nullable=False)
     
     # New fields
     number_of_posts = db.Column(db.Integer, default=0)
@@ -28,6 +28,8 @@ class User(db.Model, SerializerMixin):
     number_of_comments = db.Column(db.Integer, default=0)
     number_of_shares = db.Column(db.Integer, default=0)
     
+    
+    
     post = db.relationship('Post', backref='user')
     comment = db.relationship('Comment', backref='user')
 
@@ -36,20 +38,20 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f'User: {self.username}, ID: {self.id}'
 
-    @hybrid_property
-    def password_hash(self):
-        return self._password_hash
+    # @hybrid_property
+    # def password_hash(self):
+    #     return self._password_hash
     
-    @password_hash.setter
-    def password_hash(self, password):
-        password_hash = bcrypt.generate_password_hash(
-            password.encode('utf-8'))
-        self._password_hash = password_hash.decode('utf-8')
+    # @password_hash.setter
+    # def password_hash(self, password):
+    #     password_hash = bcrypt.generate_password_hash(
+    #         password.encode('utf-8'))
+    #     self._password_hash = password_hash.decode('utf-8')
 
-    def authenticate(self, password):
-        return bcrypt.check_password_hash(
-            self._password_hash, password.encode('utf-8')
-        )
+    # def authenticate(self, password):
+    #     return bcrypt.check_password_hash(
+    #         self._password_hash, password.encode('utf-8')
+    #     )
     
     def to_dict(self):
         return{
@@ -64,7 +66,8 @@ class User(db.Model, SerializerMixin):
             'number_of_following': self.number_of_following,
             'number_of_likes': self.number_of_likes,
             'number_of_comments': self.number_of_comments,
-            'number_of_shares': self.number_of_shares
+            'number_of_shares': self.number_of_shares,
+           
         }
     
     @validates('email')
