@@ -18,7 +18,7 @@ class User(db.Model, SerializerMixin):
     second_name = db.Column(db.String, nullable=False, default="SecondName")
     profile_photo = db.Column(db.String)
     email = db.Column(db.String)
-    _password_hash = db.Column(db.String, nullable=False)
+    password_hash = db.Column(db.String(256), nullable=False)
     
     # New fields
     number_of_posts = db.Column(db.Integer, default=0)
