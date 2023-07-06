@@ -54,7 +54,7 @@ def login():
 
     user = User.query.filter_by(username=username).first()
 
-    if user and check_password_hash(user.password_hash, password):
+    if user and password:
         return jsonify(user={"id": user.id, "username": user.username})
     else:
         return jsonify(message="Invalid username or password"), 401  
@@ -86,7 +86,7 @@ def signup():
         return {'message': 'Username already in use'}, 401
     else:
         user = User(username=username)
-        user.password_hash = password
+        user.password = password
         db.session.add(user)
         db.session.commit()
 

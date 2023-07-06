@@ -30,6 +30,7 @@ with app.app_context():
         passwords.append(password)
         user = User(
             username=username,
+            password=password,
             first_name=first_name,
             second_name=second_name,
             email=email,
@@ -40,7 +41,7 @@ with app.app_context():
             number_of_comments=number_of_comments,
             number_of_shares=number_of_shares
         )
-        user.password_hash = password  # Hash password is set
+        user.password = password  # Hash password is set
         
         # Manually input 20 image URLs for each user
         image_urls = [
