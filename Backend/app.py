@@ -82,36 +82,28 @@ def signup():
 
         return {'message': 'User created successfully'}, 201
 
-class Users(Resource):
-    def get(self):
-        users = User.query.all()
-        user_list = [user.to_dict() for user in users]
-        response = make_response(jsonify(user_list), 200)
-        return response 
-        
-api.add_resource(Users, '/users')
+@app.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    user_list = [user.to_dict() for user in users]
+    response = make_response(jsonify(user_list), 200)
+    return response
 
-class UserById(Resource):
-    def get(self, user_id):
-        user = User.query.get(user_id)
-        if user:
-            response = make_response(jsonify(user.to_dict()), 200)
-        else:
-            response = make_response(jsonify({'meesage': 'User not found'}), 404)
-        return response
-    
-api.add_resource(UserById, '/user/<int:user_id>')
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        response = make_response(jsonify(user.to_dict()), 200)
+    else:
+        response = make_response(jsonify({'message': 'User not found'}), 404)
+    return response
 
-class Posts(Resource):
-    def get(self):
-        posts = Post.query.all()
-        post_list = [post.to_dict() for post in posts]
-        response = make_response(jsonify(post_list), 200)
-        return response
-    
-    
-    
-api.add_resource(Posts, '/posts')
+@app.route('/posts', methods=['GET'])
+def get_posts():
+    posts = Post.query.all()
+    post_list = [post.to_dict() for post in posts]
+    response = make_response(jsonify(post_list), 200)
+    return response
 
 class PostById(Resource):
     def get(self, post_id):
