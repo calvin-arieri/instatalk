@@ -15,6 +15,8 @@ with app.app_context():
     # Generate 20 users (to stay within the RPM limit)
     users = []
     passwords = []
+
+    image_ID = 7
     for _ in range(20):
         username = fake.unique.user_name()
         password = fake.password()
@@ -40,10 +42,11 @@ with app.app_context():
             number_of_comments=number_of_comments,
             number_of_shares=number_of_shares
         )
-        user.password_hash = password  # Hash password is set
-        user.profile_photo = "https://picsum.photos/400"
+        user.password = password  # Hash password is set
+        user.profile_photo = f"https://picsum.photos/id/{image_ID}/400"
         users.append(user)
         db.session.add(user)
+        image_ID += 1
 
     # Print users and passwords to a text file and overwrite the existing file
     with open('user_passwords.txt', 'w') as file:
@@ -124,10 +127,11 @@ with app.app_context():
 
     # Generate 40 posts to stay within the RPM limit
     posts = []
+    image_id = 69
     for _ in range(40):
         
         user = random.choice(users)
-        image_url = "https://picsum.photos/400/500"
+        image_url = f"https://picsum.photos/id/{image_id}400/500"
         likes = random.randint(0,1000)
         dislikes = random.randint(0,1000)
         caption_text = generate_random_text(caption_corpus)
@@ -136,6 +140,7 @@ with app.app_context():
                     dislikes = dislikes, created_at=created_at, caption=caption_text)
         posts.append(post)
         db.session.add(post)
+        image_id += 1
 
     db.session.commit()
 
