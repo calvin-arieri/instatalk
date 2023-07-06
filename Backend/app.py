@@ -148,6 +148,28 @@ def comment_operations(comment_id):
         db.session.commit()
         return jsonify({'message': 'Comment deleted successfully'}), 200
 
+@app.route('/comment', methods=['POST'])
+def create_comment():
+    data = request.get_json()
+    comment_text = data.get('comment')
+
+    user_id = session.get('user_id')
+    post_id = data.get('post_id')
+
+    if user_id:
+        user = User.query.get(user_id)
+        if user:
+            post = Post.query.get(post_id)
+            if post:
+                comment = Comment(comment=comment_text, user=user, post=post)
+                db.session.add(comment)
+                db.session.commit()
+                response = make_response(jsonify({'message':'Comment created successfully'}), 201)
+            else:
+                response = make_response(jsonify({'message':'Post not found'}), 404)
+        else:
+            response = make_response(jsonify({'message': 'User not found authenticated'}), 401)
+        return response
 
 
 
