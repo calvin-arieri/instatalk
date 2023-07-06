@@ -105,111 +105,48 @@ def get_posts():
     response = make_response(jsonify(post_list), 200)
     return response
 
-class PostById(Resource):
-    def get(self, post_id):
-        post = Post.query.get(post_id)
-        if post:
-            response_data = {
-                'post': post.to_dict(),
-                'comments': [comment.to_dict() for comment in post.comment]
-            }
-            response = make_response(jsonify(response_data), 200)
-        else:
-            response = make_response(jsonify({'message': 'Post not found'}), 404)
-        return response
-    
-    def put(self, post_id):
-        post = Post.query.get(post_id)
-        if post:
-            data = request.get_json()
-            post.image_url = data.get('image_url', post.image_url)
-            post.caption = data.get('caption', post.caption)
-            db.session.commit()
-            response = make_response(jsonify({'message':'Post updated successfully'}), 200)
-        else:
-            response =make_response(jsonify({'message':'Post not found'}), 404)
-        return response
-    
-    def delete(self, post_id):
-        post = Post.query.get(post_id)
-        if post:
-            db.session.delete(post)
-            db.session.commit()
-            response = make_response(jsonify({'message': 'Post deleted successfully'}), 200)
-        else:
-            response = make_response(jsonify({'message':'Post not found'}), 404)
-        return response
-    
-    def post(self):
+@app.route('/post/<int:post_id>', methods=['GET', 'PUT', 'DELETE'])
+def post_operations(post_id):
+    post = Post.query.get(post_id)
+    if not post:
+        return jsonify({'message': 'Post not found'}), 404
+
+    if request.method == 'GET':
+        response_data = {
+            'post': post.to_dict(),
+            'comments': [comment.to_dict() for comment in post.comment]
+        }
+        return jsonify(response_data), 200
+
+    if request.method == 'PUT':
         data = request.get_json()
-        image_url = data.get('image_url')
-        caption = data.get('caption')
+        post.image_url = data.get('image_url', post.image_url)
+        post.caption = data.get('caption', post.caption)
+        db.session.commit()
+        return jsonify({'message': 'Post updated successfully'}), 200
 
-        user_id = session.get('user_id')
-
-        if user_id:
-            user = User.query.get(user_id)
-            if user:
-                post = Post(image_url=image_url, caption=caption, user=user)
-                db.session.add(post)
-                db.session.commit()
-                response = make_response(jsonify({'message': 'Post created successfully'}), 201)
-            else:
-                response = make_response(jsonify({'message':'User does not exist'}), 404)
-        else:
-            response = make_response(jsonify({'message':'User not authenticated'}), 401)
-        return response
-    
-
-api.add_resource(PostById, '/post/<int:post_id>')
+    if request.method == 'DELETE':
+        db.session.delete(post)
+        db.session.commit()
+        return jsonify({'message': 'Post deleted successfully'}), 200
 
 
-class CommentById(Resource):
-    def put(self, comment_id):
-        comment = Comment.query.get(comment_id)
-        if comment:
-            data = request.get_json()
-            comment.comment = data.get('comment', comment.comment)
-            db.session.commit()
-            response = make_response(jsonify({'message':'Comment updated successfully'}), 200)
-        else:
-            response = make_response(jsonify({'message':'Comment not found'}), 400)
-        return response
-    def delete(self,comment_id):
-        comment= Comment.query.get(comment_id)
-        if comment:
-            db.session.delete(comment)
-            db.session.commit()
-            response = make_response(jsonify({'message':'Comment deleted successfully'}), 200)
-        else:
-            response = make_response(jsonify({'message':'Comment not found'}), 400)
-        return response
+@app.route('/comment/<int:comment_id>', methods=['PUT', 'DELETE'])
+def comment_operations(comment_id):
+    comment = Comment.query.get(comment_id)
+    if not comment:
+        return jsonify({'message': 'Comment not found'}), 400
 
-    def post(self):
+    if request.method == 'PUT':
         data = request.get_json()
-        comment_text = data.get('comment')
+        comment.comment = data.get('comment', comment.comment)
+        db.session.commit()
+        return jsonify({'message': 'Comment updated successfully'}), 200
 
-        user_id = session.get('user_id')
-        post_id = data.get('post_id')
-
-        if user_id:
-            user = User.query.get(user_id)
-            if user:
-                post = Post.query.get(post_id)
-                if post:
-                    comment = Comment(comment=comment_text, user=user, post=post)
-                    db.session.add(comment)
-                    db.session.commit()
-                    response = make_response(jsonify({'message':'Comment created successfully'}), 201)
-                else:
-                    response = make_response(jsonify({'message':'Post not found'}), 404)
-            else:
-                response = make_response(jsonify({'message':'User not found'}), 404)
-        else:
-            response = make_response(jsonify({'message':'User not authenticated'}), 400)
-        return response
-
-api.add_resource(CommentById, '/comment/<int:comment_id>')
+    if request.method == 'DELETE':
+        db.session.delete(comment)
+        db.session.commit()
+        return jsonify({'message': 'Comment deleted successfully'}), 200
 
 
 
