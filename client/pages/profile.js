@@ -3,15 +3,17 @@ import { useState, useEffect } from 'react'
 import UserPost from '../components/userPost'
 import PostForm from '../components/PostForm'
 import UpdateProfile from '../components/UpdateProfile'
+import { data } from 'autoprefixer'
 
 const Profile = () => {
-  const [userdata, setUserData]=useState()
-  const [display, setComponent]=useState(<UserPost />)
+  const [userdata, setUserData]=useState({})
+  const [display, setComponent]=useState(<UserPost specific_link={`http://127.0.0.1:5000/posts`} />)
   useEffect(()=>{
-    fetch(url)
+    fetch('http://127.0.0.1:5000/user/1')
     .then((r)=>r.json())
     .then((data)=>{setUserData(data)})
   },[])
+  console.log(userdata)
   return (
     <div>
       <div>
@@ -29,7 +31,7 @@ const Profile = () => {
             </div>
             <div className="items-center">
               <div className="mr-8">
-                <p className="text-white hover:text-gray" onClick={()=>{setComponent(<UserPost />)}}>Posts</p>
+                <p className="text-white hover:text-gray" onClick={()=>{setComponent(<UserPost specific_link={`http://127.0.0.1:5000/posts`} />)}}>Posts</p>
                 <p className="font-semibold text-lg text-black">{3}</p>
 
               </div>
