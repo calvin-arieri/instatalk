@@ -12,7 +12,7 @@ function Login({ setIsLoggedIn, setLoggedInUser  }) {
     e.preventDefault();
     try {
       // Make a GET request to check if the username exists in the database
-      const response = await fetch(`http://localhost:8000/users?username=${username}`);
+      const response = await fetch(`http://127.0.0.1:5555/users?username=${username}`);
 
       if (response.ok) {
         // Assuming the response contains the user data
@@ -23,7 +23,7 @@ function Login({ setIsLoggedIn, setLoggedInUser  }) {
           const user = users.find((user) => user.username === username);
 
           // Check if the entered password matches the user's password
-          if (user.password === password) {
+          if (user. _password_hash ===  password) {
             setIsLoggedIn(true);
             router.push("/");
           } else {

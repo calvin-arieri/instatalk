@@ -6,7 +6,7 @@ function UserPost({specific_link}){
     const [user_post , setUserPost]=useState()
     const [refresh_page, setRefreshPage]=useState(false)
     useEffect(()=>{
-      fetch(specific_link)
+      fetch('http://127.0.0.1:5555/users')
       .then((r)=>r.json())
       .then((data)=>{
         if(data.length > 0){
