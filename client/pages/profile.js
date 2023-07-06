@@ -4,10 +4,11 @@ import UserPost from '../components/userPost'
 import PostForm from '../components/PostForm'
 import UpdateProfile from '../components/UpdateProfile'
 
-const Profile = ({id_of_current_user}) => {
+const Profile = () => {
+  const id_of_current_user = 2
   const [userdata, setUserData]=useState({})
   useEffect(()=>{
-    const user_url=`http://127.0.0.1:5000/user/${id_of_current_user}`
+    const user_url=`http://127.0.0.1:5555/user/${id_of_current_user}`
     fetch(user_url)
     .then((r)=>r.json())
     .then((data)=>{setUserData(data)})
