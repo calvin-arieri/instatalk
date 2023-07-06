@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function PostForm({user_get_id, posting_link}) {
+function PostForm({user_get_id}) {
   const formSchema = yup.object().shape({
     image_url: yup.string().required("Must enter an Image URL"),
-    comment: yup.string().required("Must enter a caption").min(15).max(100),
+    caption: yup.string().required("Must enter a caption").min(15).max(100),
   });
 
     const formik=useFormik({
@@ -18,7 +18,7 @@ function PostForm({user_get_id, posting_link}) {
     validationSchema: formSchema,
     onSubmit:(values)=>{
         console.log(values)
-        fetch(the_link,{
+        fetch(`http://127.0.0.1:5000/posts`,{
             method:'POST',
             headers:{
                 "Content-Type":"application/json"
@@ -33,8 +33,8 @@ function PostForm({user_get_id, posting_link}) {
     }                
     })
     return(
-        <form onSubmit={formik.handleSubmit}>
-            <label>Input image</label>
+        <form onSubmit={formik.handleSubmit} className="w-1/2 ">
+            <label htmlFor="image_url">Input image</label>
             <input
             type="text"
             value={formik.values.image_url}
@@ -42,7 +42,7 @@ function PostForm({user_get_id, posting_link}) {
             name="image_url"           
              />
              <p style={{ color: "gray" }}> {formik.errors.image_url}</p>
-             <label>Caption</label>
+             <label htmlFor="caption">Caption</label>
              <textarea 
              value={formik.values.caption}
              onChange={formik.handleChange} 

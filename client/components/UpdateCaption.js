@@ -13,7 +13,7 @@ const formik=useFormik({
     onSubmit:(values)=>{
         console.log(values)
         fetch(`${recieve_link}/${get_id}` ,{
-            method: 'PATCH',
+            method: 'PUT',
             headers:{
                 "Content-Type":"application/json"
             },
