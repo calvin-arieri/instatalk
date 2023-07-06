@@ -80,19 +80,19 @@ const Users = () => {
                   <div className="flex items-center justify-between">
                     <div className="mr-8">
                       <p className="text-black">Posts</p>
-                      <p className="font-semibold text-lg text-black">{user.posts}</p>
+                      <p className="font-semibold text-lg text-black">{user.number_of_posts}</p>
 
                     </div>
                     <div className="mr-8">
                       <p className="text-black">Followers</p>
-                      <p className="font-semibold text-lg text-black">{user.followers}</p>
+                      <p className="font-semibold text-lg text-black">{user.number_of_followers}</p>
 
 
                     </div>
                     <div>
 
                       <p className="text-gray-600">Following</p>
-                      <p className="font-semibold text-lg text-black">{user.following}</p>
+                      <p className="font-semibold text-lg text-black">{user.number_of_following}</p>
 
                     </div>
                   </div>

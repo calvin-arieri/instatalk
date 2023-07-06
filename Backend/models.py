@@ -20,10 +20,18 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String)
     _password_hash = db.Column(db.String, nullable=False)
     
+    # New fields
+    number_of_posts = db.Column(db.Integer, default=0)
+    number_of_followers = db.Column(db.Integer, default=0)
+    number_of_following = db.Column(db.Integer, default=0)
+    number_of_likes = db.Column(db.Integer, default=0)
+    number_of_comments = db.Column(db.Integer, default=0)
+    number_of_shares = db.Column(db.Integer, default=0)
+    
     post = db.relationship('Post', backref='user')
     comment = db.relationship('Comment', backref='user')
 
-    serialize_rules = ("-post.user","-comment.user")
+    serialize_rules = ("-post.user", "-comment.user")
 
     def __repr__(self):
         return f'User: {self.username}, ID: {self.id}'
@@ -50,14 +58,22 @@ class User(db.Model, SerializerMixin):
             'first_name': self.first_name,
             'second_name': self.second_name,
             'profile_photo': self.profile_photo,
-            'email': self.email
+            'email': self.email,
+            'number_of_posts': self.number_of_posts,
+            'number_of_followers': self.number_of_followers,
+            'number_of_following': self.number_of_following,
+            'number_of_likes': self.number_of_likes,
+            'number_of_comments': self.number_of_comments,
+            'number_of_shares': self.number_of_shares
         }
+    
     @validates('email')
     def validates_email(self, key, users):
         if '@' not in users:
             ValueError("enter a valid email")
         else:
             return users
+
     
 class Post(db.Model, SerializerMixin):
     __tablename__ = "posts"
