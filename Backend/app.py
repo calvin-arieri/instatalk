@@ -149,6 +149,37 @@ def get_posts():
     response = make_response(jsonify(post_list), 200)
     return response
 
+@app.route('/post', methods=['POST'])
+def create_post():
+    data = request.get_json()
+    image_url = data.get('image_url')
+    caption = data.get('caption')
+    
+    if not image_url:
+        response = make_response(jsonify({'message':'Image URL is required'}), 400)
+        return 
+    
+    user_id = session.get('user_id')
+
+    if not user_id:
+        response = make_response(jsonify({'message': 'User not logged in'}), 401)
+        return response 
+    
+    user = User.query.get(user_id)
+
+    if not user:
+        response = make_response(jsonify({'message': 'User not found'}), 404)
+
+        return response
+    
+    post = Post(image_url=image_url,caption=caption, user=user)
+    db.session.add(post)
+    db.session.commit()
+
+    response = make_response(jsonify({'message': 'Post created successfully', 'post': post.to_dict()}), 201)
+
+    return response 
+
 @app.route('/post/<int:post_id>', methods=['GET', 'PUT', 'DELETE'])
 def post_operations(post_id):
     post = Post.query.get(post_id)
