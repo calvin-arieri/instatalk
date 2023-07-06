@@ -75,6 +75,18 @@ class Post(db.Model, SerializerMixin):
 
     serialize_rules = ("-user.post", "-comment.post")
 
+    def to_dict(self):
+        return{
+            'id' : self.id,
+            'image_url': self.image_url,
+            'likes': self.likes,
+            'dislikes': self.dislikes,
+            'caption': self.caption,
+            'created_at': self.created_at,
+            'updated_at' : self.updated_at,
+            'user_id': self.user_id
+        }
+
     def __repr__(self):
         return f'Image: {self.image_url}, Likes: {self.likes}, Dislikes: {self.dislikes}'
     
@@ -89,6 +101,16 @@ class Comment(db.Model, SerializerMixin):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
 
     serialize_rules = ("-user.comment", "-post.comment")
+
+    def to_dict(self):
+        return{
+            'id' : self.id,
+            'comment': self.comment,
+            'post_id': self.post_id,
+            'created_at': self.created_at,
+            'updated_at' : self.updated_at,
+            'user_id': self.user_id
+        }
 
     def __repr__(self):
         return f'Comment: {self.comment}, ID: {self.id}' 
