@@ -51,7 +51,7 @@ const Posts = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/users')
+    fetch('http://127.0.0.1:5555/users')
       .then((response) => response.json())
       .then((data) => setUsers(data));
   }, []);
@@ -80,14 +80,14 @@ const Posts = () => {
           <div key={user.id} className="flex flex-col items-center">
             <div className="w-66 bg-white rounded-lg shadow-md">
               <img
-                src={user.profilePicture}
+                src={user.profile_photo}
                 alt={user.name}
                 className="w-full h-64 object-cover rounded-t-lg"
               />
               <div className="px-4 py-3">
                 <div className="flex items-center mb-2">
                   <img
-                    src={user.profilePicture}
+                    src={user.profile_photo}
                     alt={user.name}
                     className="w-8 h-8 rounded-full mr-2 object-cover"
                   />
