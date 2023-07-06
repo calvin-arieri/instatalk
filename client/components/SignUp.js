@@ -24,7 +24,7 @@ function SignUp(){
             validationSchema:formSchema,
             onSubmit:(values)=>{
                 console.log(values)
-                fetch("http://localhost:8000/users",{
+                fetch("",{
                     method:"POST",
                     headers:{
                         "Content-Type":"application/json",
