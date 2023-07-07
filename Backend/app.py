@@ -141,7 +141,15 @@ def get_user(user_id):
         else:
             response = make_response(jsonify({'message': 'User not found'}), 404)
         return response
+    if request.method=='PATCH':
+        user = User.query.filter_by(id=id).first()
 
+        for attr in request.form:
+            setattr(User, attr, request.form.get(attr))
+
+        db.session.add(user)
+        db.session.commit()
+        
 @app.route('/posts', methods=['GET'])
 def get_posts():
     if request.method=="GET":
@@ -154,19 +162,15 @@ def get_posts():
 
 @app.route('/posts', methods=['POST'])
 def create_post():
-    data = request.get_json()
-    image_url = data.get('image_url')
-    caption = data.get('caption')
+    image_url = request.form.get('image_url')
+    caption = request.form.get('caption')
+    user_id=request.form.get('user_id')
     
     if not image_url:
         response = make_response(jsonify({'message':'Image URL is required'}), 400)
         return 
     
-    user_id = session.get('user_id')
 
-    if not user_id:
-        response = make_response(jsonify({'message': 'User not logged in'}), 401)
-        return response 
     
     user = User.query.get(user_id)
 
@@ -175,7 +179,7 @@ def create_post():
 
         return response
     
-    post = Post(image_url=image_url,caption=caption, user=user)
+    post = Post(image_url=image_url,caption=caption, user_id=user_id)
     db.session.add(post)
     db.session.commit()
 
