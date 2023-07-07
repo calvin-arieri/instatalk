@@ -8,7 +8,7 @@ function SignUp(){
         second_name:yup.string().required("Must enter second name").min(3).max(10),
         profile_photo:yup.string().required("must enter image link"),
         email:yup.string().required('Email must be entered').email("Invalid email"),
-        _password_hash:yup.string().required("Must enter password").min(8).max(15),
+        password:yup.string().required("Must enter password").min(8).max(15),
     })
 
     const formik=useFormik(
@@ -19,7 +19,7 @@ function SignUp(){
                 second_name:"",
                 profile_photo:"",
                 email:"",
-                _password_hash:"",
+                password:"",
             },
             validationSchema:formSchema,
             onSubmit:(values)=>{
@@ -90,14 +90,14 @@ function SignUp(){
             />
             <p>{formik.errors.email}</p>
 
-            <label htmlFor="_password_hash">Enter password</label>
+            <label htmlFor="password">Enter password</label>
             <input
             type="text"
             onChange={formik.handleChange}
-            value={formik.values._password_hash}  
-            name="_password_hash"
+            value={formik.values.password}  
+            name="password"
             />
-            <p>{formik.errors._password_hash}</p>
+            <p>{formik.errors.password}</p>
 
             <input
             type="submit"

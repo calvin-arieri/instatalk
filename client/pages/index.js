@@ -4,10 +4,6 @@ import Users from '../components/users';
 import Search from '../components/search';
 import Stories from '../components/stories';
 import Posts from '../components/Posts';
-import SignUp from '../components/SignUp';
-
-
-
 
 const Home = () => {
   const { theme } = useTheme();
@@ -59,12 +55,7 @@ const Home = () => {
       <Stories />
       <Search />
       <Users />
-      <Posts />     
-    
-      
-
-
-        
+      <Posts />           
 
 </div>
 </div>
