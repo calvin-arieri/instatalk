@@ -1,8 +1,8 @@
-"""initial migrations
+"""Add num_comments field to Post model
 
-Revision ID: 06782052a2b4
+Revision ID: 7d3ede40216f
 Revises: 
-Create Date: 2023-07-07 00:37:35.467663
+Create Date: 2023-07-07 03:34:31.497084
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '06782052a2b4'
+revision = '7d3ede40216f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,6 +26,7 @@ def upgrade():
     sa.Column('profile_photo', sa.String(), nullable=True),
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('password', sa.String(length=256), nullable=False),
+    sa.Column('caption', sa.String(length=200), nullable=True),
     sa.Column('number_of_posts', sa.Integer(), nullable=True),
     sa.Column('number_of_followers', sa.Integer(), nullable=True),
     sa.Column('number_of_following', sa.Integer(), nullable=True),
