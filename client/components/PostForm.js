@@ -17,7 +17,7 @@ function PostForm({ user_get_id }) {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      console.log(values);
+      console.log(values)
       fetch(`http://127.0.0.1:5555/posts`, {
         method: "POST",
         headers: {

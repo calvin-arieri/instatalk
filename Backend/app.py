@@ -142,13 +142,17 @@ def get_user(user_id):
             response = make_response(jsonify({'message': 'User not found'}), 404)
         return response
     if request.method=='PATCH':
-        user = User.query.filter_by(id=id).first()
+        user = User.query.filter_by(id=user_id).first()
 
-        for attr in request.form:
-            setattr(User, attr, request.form.get(attr))
-
-        db.session.add(user)
+        data = request.get_json()
+        user.password = data.get('password')
+        user.username = data.get('username')
         db.session.commit()
+
+        return make_response(
+            jsonify({"message": "successfully changed"}),
+            201
+        )
         
 @app.route('/posts', methods=['GET'])
 def get_posts():
@@ -162,24 +166,12 @@ def get_posts():
 
 @app.route('/posts', methods=['POST'])
 def create_post():
-    image_url = request.form.get('image_url')
-    caption = request.form.get('caption')
-    user_id=request.form.get('user_id')
+    # image_url = request.form.get('image_url')
+    # caption = request.form.get('caption')
+    # user_id=request.form.get('user_id')  
+    data=request.get_json()
     
-    if not image_url:
-        response = make_response(jsonify({'message':'Image URL is required'}), 400)
-        return 
-    
-
-    
-    user = User.query.get(user_id)
-
-    if not user:
-        response = make_response(jsonify({'message': 'User not found'}), 404)
-
-        return response
-    
-    post = Post(image_url=image_url,caption=caption, user_id=user_id)
+    post = Post(image_url=data.get('image_url'),caption=data.get('caption'), user_id=data.get('user_id'))
     db.session.add(post)
     db.session.commit()
 

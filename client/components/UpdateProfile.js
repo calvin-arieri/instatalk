@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from 'yup';
 
-function UpdateProfile({current_user_details, changes_url}) {
+function UpdateProfile({current_user_details, this_function}) {
   const formSchema = yup.object().shape({
     username: yup.string().max(20),
     password: yup.string().min(8),
@@ -15,13 +15,18 @@ function UpdateProfile({current_user_details, changes_url}) {
     validationSchema: formSchema,
     onSubmit: (values) => {
       console.log(values);
-      fetch(changes_url, {
+      fetch(`http://127.0.0.1:5555/user/${current_user_details.id}`, {
         method: 'PATCH',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
-      });
+      }).then((r)=>{
+        if(r.ok){
+          this_function()
+          alert('updated successfully')          
+        }
+      })
     },
   });
 
@@ -37,7 +42,7 @@ function UpdateProfile({current_user_details, changes_url}) {
         type="text"
         className="border border-gray-300 rounded-md px-3 py-2 mt-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-
+      <p>{formik.errors.username}</p>
       <label htmlFor="password" className="font-semibold text-lg mt-4">
         New password
       </label>
@@ -48,7 +53,7 @@ function UpdateProfile({current_user_details, changes_url}) {
         name="password"
         className="border border-gray-300 rounded-md px-3 py-2 mt-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-
+      <p>{formik.errors.password}</p>
       <input
         type="submit"
         name="change"

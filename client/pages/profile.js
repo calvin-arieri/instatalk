@@ -7,6 +7,7 @@ import UpdateProfile from '../components/UpdateProfile';
 const Profile = () => {
   const id_of_current_user = 2;
   const [userdata, setUserData] = useState({});
+  const [refresh, setRefresh]=useState(false)
   useEffect(() => {
     const user_url = `http://127.0.0.1:5555/user/${id_of_current_user}`;
     fetch(user_url)
@@ -14,7 +15,10 @@ const Profile = () => {
       .then((data) => {
         setUserData(data);
       });
-  }, []);
+  }, [refresh]);
+  function handle_refresh_page(){
+    setRefresh(!refresh)
+  }
   console.log(userdata);
   const [display, setComponent] = useState(<UserPost user_idNo={id_of_current_user} />);
   return (
@@ -29,7 +33,7 @@ const Profile = () => {
             />
             <div>
               <h2 className="text-xl font-semibold">{`${userdata.first_name} ${userdata.second_name}`}</h2>
-              <p className="text-gray-600">@{userdata.username}</p>
+              <p className="text-gray-100">@{userdata.username}</p>
             </div>
           </div>
 
@@ -60,7 +64,7 @@ const Profile = () => {
                 className="text-white cursor-pointer"
                 onClick={() => {
                   setComponent(
-                    <UpdateProfile current_user_details={userdata} changes_url={`http://127.0.0.1:5555/user/${id_of_current_user}`} />
+                    <UpdateProfile current_user_details={userdata} this_function={handle_refresh_page} />
                   );
                 }}
               >
