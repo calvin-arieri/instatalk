@@ -27,10 +27,11 @@ const formik=useFormik({
     }
 })
     return(
-        <div>
+        <div className="mt-4">
             <button>Update Caption</button><br />
             <form onSubmit={formik.handleSubmit}>
                 <textarea
+                className="rounded-10px bg-gray-00"
                 value={formik.values.caption}
                 onChange={formik.handleChange}
                 placeholder="new caption"

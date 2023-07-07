@@ -20,7 +20,7 @@ const Profile = () => {
   return (
     <div className="mx-auto w-3/4">
       <div>
-        <div className="shadow-md mx-auto p-4">
+        <div className="shadow-md mx-auto p-4 bg-gray-700 rounded p-1">
           <div className="flex mb-4">
             <img
               src={userdata.profile_photo}
@@ -33,38 +33,38 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="flex mx-auto w-3/4">
+          <div className="flex mx-auto w-3/4 bg-gray-700 rounded-10">
             <div className="mr-8">
               <p
-                className="text-gray-600 hover:text-gray-800 cursor-pointer"
+                className="text-white  text-bold hover:text-gray-800 cursor-pointer"
                 onClick={() => {
                   setComponent(<UserPost user_idNo={userdata.id} />);
                 }}
               >
-                Posts
+                POSTS
               </p>
             </div>
             <div className="mr-8">
               <p
-                className="text-black cursor-pointer"
+                className="text-white text-bold cursor-pointer"
                 onClick={() => {
                   setComponent(<PostForm user_get_id={userdata.id} />);
                 }}
               >
-                Add Post
+                ADD POST
               </p>
-              <p className="font-semibold text-lg text-black">{userdata.number_of_followers}</p>
+              {/* <p className="font-semibold text-lg text-black">{userdata.number_of_followers}</p> */}
             </div>
             <div>
               <p
-                className="text-gray-600 cursor-pointer"
+                className="text-white cursor-pointer"
                 onClick={() => {
                   setComponent(
                     <UpdateProfile current_user_details={userdata} changes_url={`http://127.0.0.1:5555/user/${id_of_current_user}`} />
                   );
                 }}
               >
-                Update Details
+                UPDATE DETAILS
               </p>
             </div>
           </div>

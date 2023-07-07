@@ -13,7 +13,7 @@ function DeleteButton({delete_link, number, get_change}){
         
     }
     return(
-        <button 
+        <button className='mt-4' 
         onClick={handleDelete}
         >Delete</button>
     )
