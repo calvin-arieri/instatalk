@@ -35,8 +35,7 @@ const Profile = () => {
               <h2 className="text-xl font-semibold">{`${userdata.first_name} ${userdata.second_name}`}</h2>
               <p className="text-gray-100">@{userdata.username}</p>
             </div>
-          </div>
-
+          </div>         
           <div className="flex mx-auto w-3/4 bg-gray-700 rounded-10">
             <div className="mr-8">
               <p
