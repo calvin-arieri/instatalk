@@ -23,7 +23,7 @@ function Signup({ setIsLoggedIn }) {
       .max(10, "Second name must not exceed 10 characters"),
     profile_photo: yup.string().required("You must enter an image link"),
     email: yup.string().required("Email must be entered").email("Invalid email"),
-    _password_hash: yup
+    password: yup
       .string()
       .required("You must enter a password")
       .min(8, "Password must be at least 8 characters")
@@ -37,7 +37,7 @@ function Signup({ setIsLoggedIn }) {
       second_name: "",
       profile_photo: "",
       email: "",
-      _password_hash: "",
+      password: "",
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -67,7 +67,7 @@ function Signup({ setIsLoggedIn }) {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="flex flex-col items-center ">
+    <form onSubmit={formik.handleSubmit} className="flex flex-col items-center">
       <div className="mb-4">
         <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
           Enter username
@@ -149,18 +149,18 @@ function Signup({ setIsLoggedIn }) {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="_password_hash" className="block text-gray-700 text-sm font-bold mb-2">
+        <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
           Enter password
         </label>
         <input
           type="password"
           onChange={formik.handleChange}
-          value={formik.values._password_hash}
-          name="_password_hash"
+          value={formik.values.password}
+          name="password"
           className="border border-gray-400 rounded px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-500"
         />
-        {formik.errors._password_hash && (
-          <p className="text-red-500 text-xs mt-1">{formik.errors._password_hash}</p>
+        {formik.errors.password && (
+          <p className="text-red-500 text-xs mt-1">{formik.errors.password}</p>
         )}
       </div>
 
