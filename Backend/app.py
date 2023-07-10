@@ -125,12 +125,40 @@ class ShowSession(Resource):
 
 api.add_resource(ShowSession, '/sessions/<string:key>')
 
-@app.route('/users', methods=['GET'])
+@app.route('/users', methods=['GET', 'POST'])
 def get_users():
-    users = User.query.all()
-    user_list = [user.to_dict() for user in users]
-    response = make_response(jsonify(user_list), 200)
-    return response
+    if request.method == 'GET':    
+        users = User.query.all()
+        user_list = [user.to_dict() for user in users]
+        response = make_response(jsonify(user_list), 200)
+        return response
+    elif request.method == 'POST':
+        data=request.get_json()
+
+        new_user= User(
+            username=data.get('username'),
+            first_name=data.get('first_name'),
+            second_name=data.get('second_name'),
+            profile_photo=data.get('profile_photo'),
+            email=data.get('email'),
+            password=data.get('password'),
+            caption="New to instatok",
+            number_of_posts=0,
+            number_of_followers=0,
+            number_of_following=0,
+            number_of_likes=0,
+            number_of_comments=0,
+            number_of_shares=0,
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        return make_response(
+            jsonify({"message":"You have successfully added new user"}),
+            201
+        )    
+
 
 @app.route('/user/<int:user_id>', methods=['GET', 'PATCH'])
 def get_user(user_id):
