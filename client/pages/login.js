@@ -1,38 +1,44 @@
-// login.js
-
-import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import { useRouter } from "next/router";
 
 function Login({ setIsLoggedIn }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const router = useRouter();
-  const [password_message, setPasswordMessage] = useState("");
-  const [username_message, setUsernameMessage] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://127.0.0.1:5555/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+  const formSchema = yup.object().shape({
+    username: yup.string().required("Username is required"),
+    password: yup.string().required("Password is required"),
+  });
 
-      if (response.ok) {
-        const user = await response.json();
-        setIsLoggedIn(true);
-        router.push("/");
-      } else {
-        const errorData = await response.json();
-        setPasswordMessage(errorData.message);
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: formSchema,
+    onSubmit: async (values) => {
+      try {
+        const response = await fetch("http://127.0.0.1:5555/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          setIsLoggedIn(true);
+          router.push("/");
+        } else {
+          const errorData = await response.json();
+          formik.setFieldError("password", errorData.message);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    },
+  });
 
   const handleSignUp = () => {
     router.push("/signup");
@@ -44,7 +50,7 @@ function Login({ setIsLoggedIn }) {
         <h1 className="dark:text-white text-white text-2xl font-bold mb-6">
           Login
         </h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -57,10 +63,11 @@ function Login({ setIsLoggedIn }) {
               type="text"
               id="username"
               placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              {...formik.getFieldProps("username")}
             />
-            <p>{username_message}</p>
+            {formik.touched.username && formik.errors.username && (
+              <p className="text-red-500 text-xs mt-1">{formik.errors.username}</p>
+            )}
           </div>
           <div className="mb-6">
             <label
@@ -74,10 +81,11 @@ function Login({ setIsLoggedIn }) {
               type="password"
               id="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              {...formik.getFieldProps("password")}
             />
-            <p>{password_message}</p>
+            {formik.touched.password && formik.errors.password && (
+              <p className="text-red-500 text-xs mt-1">{formik.errors.password}</p>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <button
