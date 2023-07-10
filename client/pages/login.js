@@ -1,12 +1,14 @@
+// login.js
+
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-function Login({ setIsLoggedIn, setLoggedInUser  }) {
+function Login({ setIsLoggedIn }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const [password_message, setMessage]=useState()
-  const [username_message, set_username]=useState()
+  const [password_message, setPasswordMessage] = useState("");
+  const [username_message, setUsernameMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,20 +27,23 @@ function Login({ setIsLoggedIn, setLoggedInUser  }) {
         router.push("/");
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.message);
+        setPasswordMessage(errorData.message);
       }
     } catch (error) {
       console.error(error);
     }
   };
+
   const handleSignUp = () => {
-    // Handle sign up logic here
+    router.push("/signup");
   };
 
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="bg-black bg-opacity-31 shadow-md rounded-lg px-8 py-6">
-        <h1 className="dark:text-white text-white text-2xl font-bold mb-6">Login</h1>
+        <h1 className="dark:text-white text-white text-2xl font-bold mb-6">
+          Login
+        </h1>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label
