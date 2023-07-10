@@ -1,8 +1,8 @@
-"""Add num_comments field to Post model
+"""creating all tables
 
-Revision ID: 7d3ede40216f
+Revision ID: fb6f921e274c
 Revises: 
-Create Date: 2023-07-07 03:34:31.497084
+Create Date: 2023-07-10 21:30:39.490781
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7d3ede40216f'
+revision = 'fb6f921e274c'
 down_revision = None
 branch_labels = None
 depends_on = None
