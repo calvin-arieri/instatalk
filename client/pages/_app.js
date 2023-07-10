@@ -7,7 +7,6 @@ import Navbar from '../components/Navbar';
 import Login from './login';
 
 import '../styles/globals.css';
-import SignUp from '../components/SignUp';
 
 const MyApp = ({ Component, pageProps }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,8 +33,7 @@ const MyApp = ({ Component, pageProps }) => {
             {/* <Footer /> */}
           </>
         ) : (
-          // <Login setIsLoggedIn={setIsLoggedIn} />
-          <SignUp />
+          <Login setIsLoggedIn={setIsLoggedIn} />
         )}
       </div>
       <Script src="https://kit.fontawesome.com/d45b25ceeb.js" crossorigin="anonymous" />

@@ -22,7 +22,8 @@ function SignUp(){
                 password:"",
             },
             validationSchema:formSchema,
-            onSubmit:(values)=>{
+            onSubmit:(values, e)=>{
+                e.target.preventDefault()
                 console.log(values)
                 fetch("http://127.0.0.1:5555/users",{
                     method:"POST",
@@ -45,64 +46,73 @@ function SignUp(){
 
     return(
         <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="username">Enter username</label>
-            <input
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.username}  
-            name="username"
-            />
-            <p>{formik.errors.username}</p>
+            <fieldset>
+                <legend>Sign Up</legend>
+                    <label htmlFor="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter username</label>
+                    <input
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.username}  
+                    name="username"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    <p>{formik.errors.username}</p>
 
-            <label htmlFor="first_name">Enter first name</label>
-            <input
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.first_name}  
-            name="first_name"
-            />
-            <p>{formik.errors.first_name}</p>
-            
-            <label htmlFor="second_name">Enter second name</label>
-            <input
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.second_name}  
-            name="second_name"
-            />
-            <p>{formik.errors.second_name}</p>
+                    <label htmlFor="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter first name</label>
+                    <input
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.first_name}  
+                    name="first_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    <p>{formik.errors.first_name}</p>
+                    
+                    <label htmlFor="second_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter second name</label>
+                    <input
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.second_name}  
+                    name="second_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    <p>{formik.errors.second_name}</p>
 
-            <label htmlFor="profile_photo">Enter profile photo</label>
-            <input
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.profile_photo}  
-            name="profile_photo"
-            />
-            <p>{formik.errors.profile_photo}</p>
+                    <label htmlFor="profile_photo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter profile photo</label>
+                    <input
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.profile_photo}  
+                    name="profile_photo"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    <p>{formik.errors.profile_photo}</p>
 
-            <label htmlFor="email">Enter email</label>
-            <input
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.email}  
-            name="email"
-            />
-            <p>{formik.errors.email}</p>
+                    <label htmlFor="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter email</label>
+                    <input
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}  
+                    name="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    <p>{formik.errors.email}</p>
 
-            <label htmlFor="password">Enter password</label>
-            <input
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.password}  
-            name="password"
-            />
-            <p>{formik.errors.password}</p>
+                    <label htmlFor="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter password</label>
+                    <input
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.password}  
+                    name="password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                    <p>{formik.errors.password}</p>
 
-            <input
-            type="submit"
-            value="register"
-            />                        
+                    <input
+                    type="submit"
+                    value="register"
+                    />
+            </fieldset>                        
         </form>
     )
 }
