@@ -51,7 +51,7 @@ const Posts = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5555/users')
+    fetch('https://instatok.onrender.com/users')
       .then((response) => response.json())
       .then((data) => setUsers(data));
   }, []);
