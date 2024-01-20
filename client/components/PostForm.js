@@ -18,7 +18,7 @@ function PostForm({ user_get_id }) {
     validationSchema: formSchema,
     onSubmit: (values) => {
       console.log(values)
-      fetch(`http://127.0.0.1:5555/posts`, {
+      fetch(`https://instatok.onrender.com/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
