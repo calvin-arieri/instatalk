@@ -42,7 +42,7 @@ function Signup({ setIsLoggedIn }) {
     validationSchema: formSchema,
     onSubmit: (values) => {
       console.log(values);
-      fetch("http://127.0.0.1:5555/signup", {
+      fetch("https://instatok.onrender.com/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
