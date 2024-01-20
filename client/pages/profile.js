@@ -9,7 +9,7 @@ const Profile = () => {
   const [userdata, setUserData] = useState({});
   const [refresh, setRefresh]=useState(false)
   useEffect(() => {
-    const user_url = `http://127.0.0.1:5555/user/${id_of_current_user}`;
+    const user_url = `https://instatok.onrender.com/user/${id_of_current_user}`;
     fetch(user_url)
       .then((r) => r.json())
       .then((data) => {
