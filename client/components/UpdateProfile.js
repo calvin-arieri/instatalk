@@ -15,7 +15,7 @@ function UpdateProfile({current_user_details, this_function}) {
     validationSchema: formSchema,
     onSubmit: (values) => {
       console.log(values);
-      fetch(`http://127.0.0.1:5555/user/${current_user_details.id}`, {
+      fetch(`https://instatok.onrender.com/${current_user_details.id}`, {
         method: 'PATCH',
         headers: {
           "Content-Type": "application/json",
