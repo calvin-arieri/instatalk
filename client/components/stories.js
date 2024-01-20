@@ -50,7 +50,7 @@ const Stories = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5555/users')
+    fetch('hhttps://instatok.onrender.com/users')
       .then((response) => response.json())
       .then((data) => setUsers(data));
   }, []);
