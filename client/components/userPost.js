@@ -5,9 +5,9 @@ import UpdateCaption from "./UpdateCaption";
 function UserPost({user_idNo}){
     const [user_post , setUserPost]=useState([])
     const [refresh_page, setRefreshPage]=useState(false)
-    const specific_link="http://127.0.0.1:5555/post"
+    const specific_link="https://instatok.onrender.com/post"
     useEffect(()=>{
-      fetch(`http://127.0.0.1:5555/posts`)
+      fetch(`https://instatok.onrender.com/posts`)
       .then((r)=>r.json())
       .then((data)=>{
         if(data.length > 0){
